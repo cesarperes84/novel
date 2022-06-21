@@ -10,8 +10,8 @@ import { ActionType, reducer, StateType, Types } from '../reducers/reducersConte
 
 interface ContentContextData extends StateType {
   dispatchContent: Dispatch<ActionType>,
-  loadDayContent: any,
   handleSearch: any,
+  loadDayContent: any,
 };
 
 interface Props {
@@ -52,6 +52,7 @@ const ContentProvider = ({children}: Props): JSX.Element => {
 
   const providerValue = useMemo(() => ({
     ...state,
+    dispatchContent,
     handleSearch,
     loadDayContent,
   }), [handleSearch, loadDayContent, state]);

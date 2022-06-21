@@ -19,7 +19,7 @@ export const ContainerStars = styled(Box)`
     color: #00888F;
     font-size: 30px;
   }
-  .icon-celebration:nth-child(2) {
+  .icon-celebration:nth-of-type(2) {
     @media (max-width: 414px) {
       margin: 0 20px;
     }

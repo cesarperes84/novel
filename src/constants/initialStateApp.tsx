@@ -1,8 +1,6 @@
 const initialState = {
-  // content: { name: '', photos: [''] },
-  // results: [{ name: '', photos: [''] }],
   content: {},
-  results: [],
+  results: [{ name: '', photos: [''] }],
   statusContent: 'unloaded',
   statusResult: 'unloaded',
 };

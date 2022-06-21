@@ -7,24 +7,31 @@ export enum Types {
   SetContent = "setContent",
 }
 
+export type ResultType = {
+  name: string;
+  photos: string[];
+}
+
 export type StateType = {
   content: {
     name: string,
-    photos: Array<string>,
+    photos: string[],
   };
-  results: [];
+  results: ResultType[];
   statusContent: string;
   statusResult: string;
 }
 
 export type ActionType = {
-  type: Types;
-  payload?: any;
+  type: Types,
+  payload?: any,
 }
 
-export type ContentState = typeof initialState;
+/* export type ContentState = typeof initialState;
 
-export function reducer(state: StateType, action: ActionType): ContentState {
+export function reducer(state: StateType, action: ActionType): ContentState { */
+  
+export function reducer(state: StateType, action: ActionType) {
     switch (action.type) {
       case Types.SetContent:
         return {
