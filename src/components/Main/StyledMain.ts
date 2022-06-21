@@ -11,7 +11,7 @@ export const ContainerAutoComplete = styled(Box)`
 
 export const Text = styled(Typography)`
   color: #00888F;
-  @media (max-width: 390px) {
+  @media (max-width: 414px) {
     font-size: 26px;
   }
   font-size: 50px;
