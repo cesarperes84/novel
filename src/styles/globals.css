@@ -1,0 +1,68 @@
+html,
+body {
+  background-color: #F5F5F5 !important;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+@font-face {
+  font-family: 'Globotipo Rounded';
+  font-style: normal;
+  font-weight: bold;
+  src: url(/fonts/globotipo-rd/GlobotipoRounded-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'Globotipo Rd';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/fonts/globotipo-rd/globo_rd_bd.ttf);
+}
+
+
+
+@font-face {
+  font-family: 'Globotipo Rd';
+  font-style: italic;
+  font-weight: 700;
+  src: url(/fonts/globotipo-rd/globo_rd_bd_it.ttf);
+}
+
+@font-face {
+  font-family: 'Globotipo Rd';
+  font-style: normal;
+  font-weight: 900;
+  src: url(/fonts/globotipo-rd/globo_rd_bk.ttf);
+}
+
+@font-face {
+  font-family: 'Globotipo Rd';
+  font-style: italic;
+  font-weight: 900;
+  src: url(/fonts/globotipo-rd/globo_rd_bk_it.ttf);
+}
+
+@font-face {
+  font-family: 'Globotipo Rd';
+  font-style: normal;
+  font-weight: normal;
+  src: url(/fonts/globotipo-rd/globo_rd_rg.ttf);
+}
+
+@font-face {
+  font-family: 'Globotipo Rd';
+  font-style: italic;
+  font-weight: normal;
+  src: url(/fonts/globotipo-rd/globo_rd_rg_it.ttf);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}

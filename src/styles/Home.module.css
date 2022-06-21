@@ -1,0 +1,43 @@
+@media (min-width: 375px) {
+  .container {
+    margin: 0 auto;
+    width: 365px;
+  } 
+}
+
+@media (min-width: 414px) {
+  .container {
+    margin: 0 auto;
+    width: 386px;
+  } 
+}
+
+@media (min-width: 800px) {
+  .container {
+    margin: 0 auto;
+    width: 600px;
+  } 
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 82%;
+    flex-direction: column;
+  }
+}
