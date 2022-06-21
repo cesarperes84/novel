@@ -8,11 +8,15 @@ import  * as S from './StyledMain';
 import TextField from '@mui/material/TextField';
 import messages from './messagesMain';
 
+type AutocompleteType = {
+  inputValue?: string, 
+  title: string,
+}
 
 type StateType = {
   activeStep: number;
   isOpen: boolean;
-  errors: Array<String>;
+  errors: string[];
   productDay: string;
   statusGame: string;
 }
@@ -34,13 +38,13 @@ export default function Main() {
   const options = useMemo(
     () =>
       statusResult === "loaded" &&
-      results?.map((item) => ({
-        title: capitalize(item.name),
+      results?.map(({ name }) => ({
+        title: capitalize(name),
       })),
     [results]
   );
   
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: any, newValue: string) => {
     event.preventDefault();
     if (typeof newValue === "string") {
         setDialogValue(newValue);
@@ -123,7 +127,7 @@ export default function Main() {
           <Autocomplete
             clearOnBlur={false}
             id="free-solo-dialog-demo"
-            getOptionLabel={(option) => {
+            getOptionLabel={(option: AutocompleteType) => {
               // e.g value selected with enter, right from the input
               if (typeof option === "string") {
                 return option;
@@ -136,7 +140,7 @@ export default function Main() {
             handleHomeEndKeys
             noOptionsText={messages.noResult}
             onInputChange={(event, newValue) => handleChange(event, newValue)}
-            options={options}
+            options={options as AutocompleteType[]}
             open={state.isOpen}
             openOnFocus={false}
             sx={{ marginRight: "8px" , width: "100%" }}

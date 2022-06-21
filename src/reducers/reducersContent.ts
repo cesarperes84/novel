@@ -18,7 +18,7 @@ export type StateType = {
 }
 
 export type ActionType = {
-  type: Types
+  type: Types;
   payload?: any;
 }
 
