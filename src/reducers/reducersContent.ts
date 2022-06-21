@@ -27,10 +27,12 @@ export type ActionType = {
   payload?: any,
 }
 
-/* export type ContentState = typeof initialState;
+/* 
+export type ContentState = typeof initialState;
 
-export function reducer(state: StateType, action: ActionType): ContentState { */
-  
+export function reducer(state: StateType, action: ActionType): ContentState {
+ */
+
 export function reducer(state: StateType, action: ActionType) {
     switch (action.type) {
       case Types.SetContent:

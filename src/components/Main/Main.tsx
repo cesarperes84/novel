@@ -13,7 +13,7 @@ type AutocompleteType = {
   title: string,
 }
 
-type StateType = {
+type StateMainType = {
   activeStep: number;
   isOpen: boolean;
   errors: string[];
@@ -31,7 +31,7 @@ const initState = {
 
 
 export default function Main() {
-  const [state, setState] = useState<StateType>(initState);
+  const [state, setState] = useState<StateMainType>(initState);
   const [dialogValue, setDialogValue] = useState("");
   const { content, loadDayContent, results, handleSearch, statusResult, statusContent } = useContentContext();
   
