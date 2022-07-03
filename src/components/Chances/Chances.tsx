@@ -8,7 +8,9 @@ interface ChancesProps {
 const Chances = ({ errors }: ChancesProps): JSX.Element => {
   return (
     <S.Container>
+      <S.ContainerErrors>
         {errors?.map((item) => <S.Label key={item}>{item}</S.Label>)}
+      </S.ContainerErrors>
         <S.Text>
           {`Você tem ${5 - errors.length} chances. `}
           <S.SubText>{messages?.subText}</S.SubText>

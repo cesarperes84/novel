@@ -16,6 +16,7 @@ export type StateType = {
   content: {
     name: string,
     photos: string[],
+    year: string,
   };
   results: ResultType[];
   statusContent: string;

@@ -6,7 +6,7 @@ const messages = {
       principalText: "Não foi dessa vez!",
       subText: "Essa foi díficil mesmo!",
     },
-    info: "Amanhã mais uma novela",
+    info: "Amanhã mais uma novela para você lembrar!",
     bottom: [
       "Veja essa e outras",
       "novelas no ",

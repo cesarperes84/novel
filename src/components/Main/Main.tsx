@@ -35,14 +35,10 @@ export default function Main() {
   const [dialogValue, setDialogValue] = useState("");
   const { content, loadDayContent, results, handleSearch, statusResult, statusContent } = useContentContext();
   
-  const options = useMemo(
-    () =>
-      statusResult === "loaded" &&
-      results?.map(({ name }) => ({
-        title: capitalize(name),
-      })),
-    [results]
-  );
+  const options = useMemo(() => (statusResult === "loaded" ) 
+    && results?.map(({ name }) => ({
+      title: capitalize(name),
+    })),[results]);
   
   const handleChange = (event: any, newValue: string) => {
     event.preventDefault();
@@ -50,12 +46,11 @@ export default function Main() {
         setDialogValue(newValue);
     } 
 
-    if (state.productDay !== dialogValue && dialogValue?.length >= 1) {
+    if (state.productDay !== dialogValue) {
       setState((prevState) => ({
         ...prevState,
         isOpen: !state.isOpen,
       }));
-      handleSearch({ term: dialogValue });
     }
   };
 
@@ -69,7 +64,7 @@ export default function Main() {
         ...prevState,
         activeStep: state.activeStep + 1,
         isOpen: false,
-        errors: [...state.errors, `x ${dialogValue}`],
+        errors: [...state.errors, `${state.activeStep + 1}. x ${dialogValue}`],
       }));
     } 
 
@@ -103,11 +98,23 @@ export default function Main() {
   }, [statusContent]);
 
   if (state.statusGame === 'matched') {
-    return <EndGame activeStep={state.activeStep} statusGame="matched" />;
+    return <EndGame
+      activeStep={state.activeStep}
+      finalImage={content.photos[4]}
+      resultContent={capitalize(content.name)}
+      statusGame="matched"
+      year={content.year}
+    />;
   }
 
   if (state.activeStep === 5 || state.statusGame === 'game-over') {
-    return <EndGame activeStep={state.activeStep} statusGame="game-over" />;
+    return <EndGame
+      activeStep={state.activeStep}
+      statusGame="game-over"
+      resultContent={capitalize(content.name)}
+      finalImage={content.photos[4]}
+      year={content.year}
+    />;
   }
   
   if (state.statusGame === 'started' && statusContent === 'loaded') {
@@ -127,6 +134,9 @@ export default function Main() {
           <Autocomplete
             clearOnBlur={false}
             id="free-solo-dialog-demo"
+            filterOptions={(options) =>
+              options.filter(({ title }) => title.includes(dialogValue))
+            }
             getOptionLabel={(option: AutocompleteType) => {
               // e.g value selected with enter, right from the input
               if (typeof option === "string") {
@@ -138,6 +148,7 @@ export default function Main() {
               return option.title;
             }}
             handleHomeEndKeys
+            inputValue={dialogValue}
             noOptionsText={messages.noResult}
             onInputChange={(event, newValue) => handleChange(event, newValue)}
             options={options as AutocompleteType[]}
@@ -149,6 +160,7 @@ export default function Main() {
           />
         </S.ContainerAutoComplete>
         <S.Btn
+            disabled={dialogValue === "" || dialogValue.length <= 3}
             variant="outlined"
             size="large"
             onClick={handleSubmit}

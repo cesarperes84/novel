@@ -7,6 +7,11 @@ export const Container = styled(Box)`
   text-align: center;
 `;
 
+export const ContainerErrors = styled(Box)`
+  margin-bottom: 27px;
+  text-align: left;
+`;
+
 export const Label = styled(Typography)`
   color: #C00532;
   @media (min-width: 390px) {
