@@ -3,9 +3,10 @@ import messages from './messagesChances';
 
 interface ChancesProps {
   errors: Array<string>,
+  onClick: () => void,
 }
 
-const Chances = ({ errors }: ChancesProps): JSX.Element => {
+const Chances = ({ errors, onClick }: ChancesProps): JSX.Element => {
   return (
     <S.Container>
       <S.ContainerErrors>
@@ -15,7 +16,7 @@ const Chances = ({ errors }: ChancesProps): JSX.Element => {
           {`Você tem ${5 - errors.length} chances. `}
           <S.SubText>{messages?.subText}</S.SubText>
         </S.Text>
-        <S.Text>{messages?.info}</S.Text>
+        <S.Text>Não sei essa, quero <S.Button onClick={onClick}>pular</S.Button> e perder uma chance!</S.Text>
     </S.Container>
   );
 }

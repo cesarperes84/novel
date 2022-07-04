@@ -32,6 +32,19 @@ export const Text = styled(Box)`
   font-family: 'Globotipo Rd', sans-serif;
 `;
 
+export const Button = styled(Box)`
+  color: #4E4E4E;
+  cursor: pointer;
+  display: inline;
+  @media (min-width: 390px) {
+    font-size: 14px;
+  }
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Globotipo Rd', sans-serif;
+  text-decoration: underline;
+`;
+
 export const SubText = styled(Typography)`
   color: #4E4E4E;
   display: inline-flex;

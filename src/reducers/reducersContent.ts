@@ -14,6 +14,7 @@ export type ResultType = {
 
 export type StateType = {
   content: {
+    author: string,
     name: string,
     photos: string[],
     year: string,

@@ -1,20 +1,21 @@
 import React from 'react';
 import messages from './messagesEndGame';
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/FacebookRounded';
+import FileCopyRoundedIcon from '@mui/icons-material/FileCopyRounded';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import * as S from './StyledEndGame';
 
 interface EndGameProps {
   activeStep: number,
+  autohrContent: string,
   finalImage: string,
   statusGame: string,
   resultContent: string,
   year?: string,
 }
 
-const EndGame = ({ activeStep, finalImage, resultContent, statusGame, year }: EndGameProps): JSX.Element => {
+const EndGame = ({ activeStep,autohrContent, finalImage, resultContent, statusGame, year }: EndGameProps): JSX.Element => {
 
   const iconsShare = () => {
     let icons = '';
@@ -22,27 +23,30 @@ const EndGame = ({ activeStep, finalImage, resultContent, statusGame, year }: En
     let iconsWrong = '';
 
     for (let i = 1; i < activeStep; i++) {
-      iconsWrong = iconsWrong + `🟥 `;
+      iconsWrong = iconsWrong + `❌`;
     }
     
     for (let i = 1; i <= 5 - activeStep; i++) {
-      iconsRest = iconsRest + `⬛ `;
+      iconsRest = iconsRest + `⚪ `;
     }
 
     if (statusGame === 'game-over' && activeStep === 5 ) {
-      icons = `🟥 🟥 🟥 🟥 🟥 `;
+      icons = `❌ ❌ ❌ ❌ ❌`;
     } else if (statusGame === 'game-over' && activeStep !== 5 ) {
       icons = iconsWrong + iconsRest;
     } else if (statusGame === 'matched') {
-      icons = iconsWrong + `🟩 ` + iconsRest;
+      icons = iconsWrong + `✅` + iconsRest;
     }
     return icons;
   };
    
-
-  const shareContent = `Qual é a novela? #NovelApp 🎥 ${iconsShare()}`;
+  const shareContent = `Qual é a novela? 📺 ${iconsShare()}`;
   const url = "https://novel-app-web.vercel.app";
 
+  const copyText = () => {
+    navigator.clipboard.writeText(`${shareContent} ${url}`);
+  }
+  console.log('resultContent', resultContent);
   return (
     <S.Container>
       <S.Title>A novela é</S.Title>
@@ -55,7 +59,7 @@ const EndGame = ({ activeStep, finalImage, resultContent, statusGame, year }: En
           borderRadius: "8px",
         }}
       />
-      <S.Result>A Novela de {resultContent} ({year})</S.Result>
+      <S.Result>Novela de {autohrContent} ({year})</S.Result>
       {statusGame === 'matched' && (
         <>
           <S.PrincipalText statusGame="matched">{messages.matched.principalText}</S.PrincipalText>
@@ -71,13 +75,21 @@ const EndGame = ({ activeStep, finalImage, resultContent, statusGame, year }: En
         </>
       }
       <S.Result>Compartilhe o seu desafio:</S.Result>
-      <S.ContainerStars>
-        <a href={`https://www.facebook.com/sharer/sharer.php?u=${url}&t=${shareContent} `} target="_blank"><FacebookRoundedIcon className="icon-celebration" /></a>
-        <a href={`whatsapp://send?text=${shareContent} ${url}`} target="_blank"><InstagramIcon className="icon-celebration rounded-icon" /></a>
-        <a href={`whatsapp://send?text=${shareContent} ${url}`}target="_blank"><WhatsAppIcon className="icon-celebration rounded-icon" /></a>
-        <a href={`https://twitter.com/intent/tweet?text=${shareContent}
-&url=${url}`} target="_blank"><TwitterIcon className="icon-celebration rounded-icon" /></a>
-      </S.ContainerStars>
+      <S.ContainerIcons>
+        <S.ItemIcons>
+          <a href={`https://www.facebook.com/sharer/sharer.php?u=${url}&t=${shareContent} `} target="_blank"><FacebookIcon className="icon-celebration rounded-icon" /></a>
+        </S.ItemIcons>
+        <S.ItemIcons>
+          <S.Button onClick={copyText}><FileCopyRoundedIcon className="icon-celebration rounded-icon" /></S.Button>
+        </S.ItemIcons>
+        <S.ItemIcons>
+          <a href={`whatsapp://send?text=${shareContent} ${url} #NovelApp`} target="_blank"><WhatsAppIcon className="icon-celebration rounded-icon" /></a>
+        </S.ItemIcons>
+        <S.ItemIcons>
+          <a href={`https://twitter.com/intent/tweet?text=${shareContent}
+&url=${url}&hashtags=NovelApp`} target="_blank"><TwitterIcon className="icon-celebration rounded-icon" /></a>
+        </S.ItemIcons> 
+      </S.ContainerIcons>
       <S.Info>{messages.info}</S.Info>
       <S.Text statusGame={statusGame}>{messages.bottom[0]}<br /> {messages.bottom[1]} <a href="http://www.globoplay.com" target="_blank">{messages.bottom[2]}</a></S.Text>
     </S.Container>

@@ -16,10 +16,41 @@ export const ContainerErrors = styled(Box)`
   text-align: left;
 `;
 
-export const ContainerStars = styled(Box)`
+export const ContainerIcons = styled(Box)`
+  display: flex;
   margin: 0 auto;
   text-align: center;
   width: 100%;
+  
+  .icon-celebration {
+    color: #00638C;
+    font-size: 30px;
+    @media (max-width: 414px) {
+      margin: 0 20px;
+    }
+    margin: 0 60px;
+  }
+
+  .rounded-icon {
+    background-color: #00638C;
+    border-radius: 50%;
+    color: #F5F5F5 !important;
+    padding: 5px;
+    font-size: 30px;
+  }
+`;
+
+export const ItemIcons = styled(Box)`
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+`;
+
+export const Button = styled(Box)`
+  display: flex;
+  cursor: pointer;
+  margin: 15px auto 0 auto;
+  text-align: center;
   .icon-celebration {
     color: #00638C;
     font-size: 30px;

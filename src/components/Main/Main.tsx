@@ -82,7 +82,7 @@ export default function Main() {
       }));
     }
   };
-
+  
   useEffect(() => {
     loadDayContent();
     handleSearch({ term: '' });
@@ -100,7 +100,8 @@ export default function Main() {
   if (state.statusGame === 'matched') {
     return <EndGame
       activeStep={state.activeStep}
-      finalImage={content.photos[4]}
+      finalImage={content.photos[5]}
+      autohrContent={capitalize(content.author)}
       resultContent={capitalize(content.name)}
       statusGame="matched"
       year={content.year}
@@ -111,8 +112,9 @@ export default function Main() {
     return <EndGame
       activeStep={state.activeStep}
       statusGame="game-over"
+      autohrContent={capitalize(content.author)}
       resultContent={capitalize(content.name)}
-      finalImage={content.photos[4]}
+      finalImage={content.photos[5]}
       year={content.year}
     />;
   }
@@ -132,10 +134,13 @@ export default function Main() {
         <S.Text>{messages.question}</S.Text>
         <S.ContainerAutoComplete>
           <Autocomplete
-            clearOnBlur={false}
+            clearOnBlur
             id="free-solo-dialog-demo"
-            filterOptions={(options) =>
-              options.filter(({ title }) => title.includes(dialogValue))
+            filterOptions={
+              (options) => options.filter(({ title }) => 
+                title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()
+                  .includes(
+                    dialogValue.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
             }
             getOptionLabel={(option: AutocompleteType) => {
               // e.g value selected with enter, right from the input
@@ -167,7 +172,7 @@ export default function Main() {
           >
             {messages.buttonLabel}
           </S.Btn>
-         <Chances errors={state.errors} />
+         <Chances errors={state.errors} onClick={handleSubmit} />
       </>
     );
   }
