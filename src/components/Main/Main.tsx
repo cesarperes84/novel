@@ -55,7 +55,7 @@ export default function Main() {
   };
 
   const handleSubmit = (event: any) => {
-    event.preventDefault();
+    event?.preventDefault();
     if (
       state.productDay !== "" &&
       state.productDay !== dialogValue &&
@@ -175,7 +175,7 @@ export default function Main() {
             {messages.buttonLabel}
           </S.Btn>
         </form>
-        <Chances errors={state.errors} onClick={() => handleSubmit} />
+        <Chances errors={state.errors} onClick={() => handleSubmit(null)} />
       </>
     );
   }
