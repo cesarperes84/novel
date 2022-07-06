@@ -54,7 +54,8 @@ export default function Main() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
     if (
       state.productDay !== "" &&
       state.productDay !== dialogValue &&
@@ -132,39 +133,40 @@ export default function Main() {
           }}
         />
         <S.Text>{messages.question}</S.Text>
-        <S.ContainerAutoComplete>
-          <Autocomplete
-            clearOnBlur
-            id="free-solo-dialog-demo"
-            filterOptions={
-              (options) => options.filter(({ title }) => 
-                title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()
-                  .includes(
-                    dialogValue.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
-            }
-            getOptionLabel={(option: AutocompleteType) => {
-              // e.g value selected with enter, right from the input
-              if (typeof option === "string") {
-                return option;
+        <form style={{ width: "100%" }} onSubmit={handleSubmit}>
+          <S.ContainerAutoComplete>
+            <Autocomplete
+              clearOnBlur={false}
+              id="free-solo-dialog-demo"
+              filterOptions={
+                (options) => options.filter(({ title }) => 
+                  title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()
+                    .includes(
+                      dialogValue.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
               }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
-              return option.title;
-            }}
-            handleHomeEndKeys
-            inputValue={dialogValue}
-            noOptionsText={messages.noResult}
-            onInputChange={(event, newValue) => handleChange(event, newValue)}
-            options={options as AutocompleteType[]}
-            open={state.isOpen}
-            openOnFocus={false}
-            sx={{ marginRight: "8px" , width: "100%" }}
-            renderInput={(params) => <TextField {...params} label={messages.label} variant="standard" />}
-            renderOption={(props, option) => <li {...props}>{option.title}</li>}
-          />
-        </S.ContainerAutoComplete>
-        <S.Btn
+              getOptionLabel={(option: AutocompleteType) => {
+                // e.g value selected with enter, right from the input
+                if (typeof option === "string") {
+                  return option;
+                }
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                return option.title;
+              }}
+              handleHomeEndKeys
+              inputValue={dialogValue}
+              noOptionsText={messages.noResult}
+              onInputChange={(event, newValue) => handleChange(event, newValue)}
+              options={options as AutocompleteType[]}
+              open={state.isOpen}
+              openOnFocus={false}
+              sx={{ marginRight: "8px" , width: "100%" }}
+              renderInput={(params) => <TextField {...params} label={messages.label} variant="standard" />}
+              renderOption={(props, option) => <li {...props}>{option.title}</li>}
+            />
+          </S.ContainerAutoComplete>
+          <S.Btn
             disabled={dialogValue === "" || dialogValue.length <= 3}
             variant="outlined"
             size="large"
@@ -172,7 +174,8 @@ export default function Main() {
           >
             {messages.buttonLabel}
           </S.Btn>
-         <Chances errors={state.errors} onClick={handleSubmit} />
+        </form>
+        <Chances errors={state.errors} onClick={handleSubmit} />
       </>
     );
   }
