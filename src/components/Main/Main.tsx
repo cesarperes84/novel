@@ -175,7 +175,7 @@ export default function Main() {
             {messages.buttonLabel}
           </S.Btn>
         </form>
-        <Chances errors={state.errors} onClick={handleSubmit} />
+        <Chances errors={state.errors} onClick={() => handleSubmit} />
       </>
     );
   }
