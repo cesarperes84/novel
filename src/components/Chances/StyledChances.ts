@@ -33,7 +33,7 @@ export const Text = styled(Box)`
 `;
 
 export const Button = styled(Box)`
-  color: #4E4E4E;
+  color: #00888F;;
   cursor: pointer;
   display: inline;
   @media (min-width: 390px) {

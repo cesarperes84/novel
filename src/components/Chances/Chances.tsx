@@ -16,7 +16,7 @@ const Chances = ({ errors, onClick }: ChancesProps): JSX.Element => {
           {`Você tem ${5 - errors.length} chances. `}
           <S.SubText>{messages?.subText}</S.SubText>
         </S.Text>
-        <S.Text>Não sei essa, quero <S.Button onClick={onClick}>pular</S.Button> e perder uma chance!</S.Text>
+        <S.Button onClick={onClick}>Não sei essa, quero pular e perder uma chance!</S.Button>
     </S.Container>
   );
 }

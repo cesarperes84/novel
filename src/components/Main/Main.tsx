@@ -134,7 +134,6 @@ export default function Main() {
     return (
       <>
         <Header />
-
         <img
           src={`${process.env.NEXT_PUBLIC_IMG_PATH}/${
             content.photos[state.activeStep]
