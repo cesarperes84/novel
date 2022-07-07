@@ -16,7 +16,6 @@ type AutocompleteType = {
 
 type StateMainType = {
   activeStep: number;
-  isOpen: boolean;
   errors: string[];
   productDay: string;
   statusGame: string;
@@ -25,7 +24,6 @@ type StateMainType = {
 const initState = {
   activeStep: 0,
   errors: [],
-  isOpen: false,
   productDay: "",
   statusGame: "started",
 };
@@ -41,7 +39,7 @@ export default function Main() {
     statusResult,
     statusContent,
   } = useContentContext();
-
+  
   const options = useMemo(
     () =>
       statusResult === "loaded" &&
@@ -51,18 +49,9 @@ export default function Main() {
     [results]
   );
 
-  const handleChange = (event: any, newValue: string) => {
-    event.preventDefault();
-    if (typeof newValue === "string") {
-      setDialogValue(newValue);
-    }
-
-    if (state.productDay !== dialogValue) {
-      setState((prevState) => ({
-        ...prevState,
-        isOpen: !state.isOpen,
-      }));
-    }
+  const handleChange = (event: any, newValue: any) => {
+    event?.preventDefault();
+    setDialogValue(event ? newValue : "");
   };
 
   const handleSubmit = (event: any) => {
@@ -75,7 +64,6 @@ export default function Main() {
       setState((prevState) => ({
         ...prevState,
         activeStep: state.activeStep + 1,
-        isOpen: false,
         errors: [...state.errors, `${state.activeStep + 1}. x ${dialogValue}`],
       }));
     }
@@ -99,6 +87,7 @@ export default function Main() {
         statusGame: "game-over",
       }));
     }
+    setDialogValue("");
   };
 
   useEffect(() => {
@@ -160,52 +149,23 @@ export default function Main() {
         <S.Text>{messages.question}</S.Text>
         <form style={{ width: "100%" }} onSubmit={handleSubmit}>
           <S.ContainerAutoComplete>
-            <Autocomplete
-              clearOnBlur={false}
-              id="free-solo-dialog-demo"
-              filterOptions={(options) =>
-                options.filter(({ title }) =>
-                  title
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .toLowerCase()
-                    .includes(
-                      dialogValue
-                        .normalize("NFD")
-                        .replace(/[\u0300-\u036f]/g, "")
-                        .toLowerCase()
-                    )
-                )
-              }
-              getOptionLabel={(option: AutocompleteType) => {
-                // e.g value selected with enter, right from the input
-                if (typeof option === "string") {
-                  return option;
-                }
-                if (option.inputValue) {
-                  return option.inputValue;
-                }
-                return option.title;
-              }}
-              handleHomeEndKeys
-              inputValue={dialogValue}
-              noOptionsText={messages.noResult}
-              onInputChange={(event, newValue) => handleChange(event, newValue)}
-              options={options as AutocompleteType[]}
-              open={state.isOpen}
-              openOnFocus={false}
-              sx={{ marginRight: "8px", width: "100%" }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={messages.label}
-                  variant="standard"
-                />
-              )}
-              renderOption={(props, option) => (
-                <li {...props}>{option.title}</li>
-              )}
-            />
+          <Autocomplete
+            disablePortal
+            getOptionLabel={(option: AutocompleteType) => option.title}
+            handleHomeEndKeys
+            noOptionsText={messages.noResult}
+            inputValue={dialogValue}
+            onInputChange={(event, newValue) => handleChange(event, newValue)}
+            options={options as AutocompleteType[]}
+            sx={{ marginRight: "8px", width: "100%" }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={messages.label}
+                variant="standard"
+              />
+            )}
+          />
           </S.ContainerAutoComplete>
           <S.Btn
             disabled={dialogValue === "" || dialogValue.length <= 3}
