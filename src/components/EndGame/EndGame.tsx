@@ -10,6 +10,7 @@ import Ads from "./Ads";
 
 import * as S from "./StyledEndGame";
 import { Header } from "./Header";
+import { Congratulation } from "./Congratulation";
 
 interface EndGameProps {
   activeStep: number;
@@ -35,6 +36,8 @@ const EndGame = ({
   return (
     <S.Container>
       <Header />
+      {statusGame === "matched" && <Congratulation />}
+
       <ImageNovel imageUrl={finalImage} author={autohrContent} year={year} />
 
       <ResultMessage statusGame={statusGame} activeStep={activeStep} />
@@ -42,6 +45,7 @@ const EndGame = ({
       <Share shareContent={shareContent} url={url} />
 
       <Ads statusGame={statusGame} />
+
       <Footer />
     </S.Container>
   );

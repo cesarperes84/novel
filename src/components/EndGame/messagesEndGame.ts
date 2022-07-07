@@ -4,7 +4,7 @@ const messages = {
   },
   error: {
     principalText: "Não foi dessa vez!",
-    subText: "Essa foi díficil mesmo!",
+    subText: " Essa foi díficil mesmo!",
   },
   info: "Todo dia um novo desafio.\nPróxima novela em ",
 
