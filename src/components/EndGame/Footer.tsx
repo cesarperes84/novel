@@ -13,9 +13,7 @@ export const Footer = () => {
 
   return (
     <S.Footer>
-      <p>
-        {messages.info} {`${displayHour}:${minutes}:${seconds}`}
-      </p>
+      {messages.info} {`${displayHour}:${minutes}:${seconds}`}
     </S.Footer>
   );
 };

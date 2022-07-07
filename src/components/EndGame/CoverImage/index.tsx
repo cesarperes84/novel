@@ -1,4 +1,5 @@
 import React from "react";
+
 import * as S from "./StyledCoverImage";
 
 interface ImageNovelProps {
@@ -11,16 +12,12 @@ export const ImageNovel = ({ imageUrl, author, year }: ImageNovelProps) => {
   return (
     <S.Container>
       <S.TopLabel>
-        <S.Title>A novela é:</S.Title>
+        <S.Title>A novela é: </S.Title>
       </S.TopLabel>
       <img
+        className="image-novel"
         src={`${process.env.NEXT_PUBLIC_IMG_PATH}/${imageUrl}`}
-        width={600}
-        height={340}
-        style={{
-          objectFit: "cover",
-          border: "2px solid #3A3A3A",
-        }}
+        width={"100%"}
       />
       <S.BottomLabel>
         <S.Title>

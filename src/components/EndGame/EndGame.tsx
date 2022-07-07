@@ -9,6 +9,7 @@ import { Footer } from "./Footer";
 import Ads from "./Ads";
 
 import * as S from "./StyledEndGame";
+import { Header } from "./Header";
 
 interface EndGameProps {
   activeStep: number;
@@ -33,6 +34,7 @@ const EndGame = ({
 
   return (
     <S.Container>
+      <Header />
       <ImageNovel imageUrl={finalImage} author={autohrContent} year={year} />
 
       <ResultMessage statusGame={statusGame} activeStep={activeStep} />

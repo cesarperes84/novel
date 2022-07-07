@@ -12,7 +12,7 @@ const Ads = ({ statusGame }: AdsProps): JSX.Element => {
   }
 
   return (
-    <S.AdsText statusGame={statusGame}>
+    <S.AdsText>
       {messages.adsMessage}
       <a href="http://www.globoplay.com" target="_blank">
         {messages.adsBrand}

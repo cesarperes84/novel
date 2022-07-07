@@ -5,6 +5,7 @@ export const Container = styled(Box)`
   color: #00888f;
   display: flex;
   flex-wrap: wrap;
+  max-width: 100%;
 `;
 
 export const Footer = styled(Box)`
@@ -14,23 +15,25 @@ export const Footer = styled(Box)`
   left: 0;
   bottom: 0;
   right: 0;
-  p {
-    padding: 5px;
-    margin: 0;
-    font-size: 14px;
-    text-align: center;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+
+  @media (min-width: 360px) {
+    font-size: 12px;
   }
 `;
 
-export const AdsText = styled(Box)<{ statusGame: string }>`
-  color: ${({ statusGame }) =>
-    statusGame === "matched" ? "#00888F" : "#4E4E4E"};
+export const AdsText = styled(Box)`
+  color: #4e4e4e;
   display: block;
   font-weight: bold;
-  font-size: 26px;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  margin-top: 20px;
+  align-self: flex-end;
   font-family: "Globotipo Rd", sans-serif;
-  line-height: 36px;
-  margin: 0;
   text-align: center;
+  white-space: nowrap;
   width: 100%;
 `;
