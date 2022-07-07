@@ -2,12 +2,6 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 
 export const Container = styled(Box)`
-  color: #00888f;
-  display: flex;
-  font-size: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 60px;
   width: 100%;
 `;
 

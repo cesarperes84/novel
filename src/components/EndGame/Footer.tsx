@@ -5,16 +5,17 @@ import messages from "./messagesEndGame";
 
 import { endOfDay } from "date-fns";
 
-export const Countdown = () => {
+export const Footer = () => {
   const endTime = endOfDay(Date.now());
 
   const [days, hours, minutes, seconds] = useCountdown(endTime.getTime());
   const displayHour = days === 0 && hours < 10 ? `0${hours}` : hours;
+
   return (
-    <S.Info>
-      {messages.info} {`${displayHour}:${minutes}:${seconds}`}
-    </S.Info>
+    <S.Footer>
+      <p>
+        {messages.info} {`${displayHour}:${minutes}:${seconds}`}
+      </p>
+    </S.Footer>
   );
 };
-
-export default Countdown;

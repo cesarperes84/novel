@@ -7,7 +7,9 @@ const messages = {
     subText: "Essa foi díficil mesmo!",
   },
   info: "Todo dia um novo desafio.\nPróxima novela em ",
-  bottom: ["Veja essa e outras", "novelas no ", "Globoplay"],
+
+  adsMessage: "Veja essa e outras novelas no ",
+  adsBrand: "Globoplay",
 };
 
 export default messages;
