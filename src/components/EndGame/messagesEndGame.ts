@@ -1,6 +1,6 @@
 const messages = {
   matched: {
-    principalText: "Parabéns,",
+    principalText: "Parabéns!",
   },
   error: {
     principalText: "Não foi dessa vez!",
