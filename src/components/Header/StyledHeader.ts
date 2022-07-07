@@ -8,7 +8,7 @@ export const Container = styled(Box)`
   @media (max-width: 414px) {
     width: 154px;
   }
-  width: 220px;
+  width: 163px;
 `;
 
 
