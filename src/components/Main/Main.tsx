@@ -8,6 +8,7 @@ import * as S from "./StyledMain";
 import TextField from "@mui/material/TextField";
 import messages from "./messagesMain";
 import Header from "../Header";
+import CoverImage from "./CoverImage";
 
 type AutocompleteType = {
   inputValue?: string;
@@ -39,7 +40,7 @@ export default function Main() {
     statusResult,
     statusContent,
   } = useContentContext();
-  
+
   const options = useMemo(
     () =>
       statusResult === "loaded" &&
@@ -134,37 +135,29 @@ export default function Main() {
     return (
       <>
         <Header />
-        <img
-          src={`${process.env.NEXT_PUBLIC_IMG_PATH}/${
-            content.photos[state.activeStep]
-          }`}
-          width="100%"
-          style={{
-            border: "2px solid #3A3A3A",
-            margin: "0 10px",
-            borderRadius: "8px",
-          }}
-        />
+
+        <CoverImage imageUrl={content.photos[state.activeStep]} />
+
         <S.Text>{messages.question}</S.Text>
         <form style={{ width: "100%" }} onSubmit={handleSubmit}>
           <S.ContainerAutoComplete>
-          <Autocomplete
-            disablePortal
-            getOptionLabel={(option: AutocompleteType) => option.title}
-            handleHomeEndKeys
-            noOptionsText={messages.noResult}
-            inputValue={dialogValue}
-            onInputChange={(event, newValue) => handleChange(event, newValue)}
-            options={options as AutocompleteType[]}
-            sx={{ marginRight: "8px", width: "100%" }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={messages.label}
-                variant="standard"
-              />
-            )}
-          />
+            <Autocomplete
+              disablePortal
+              getOptionLabel={(option: AutocompleteType) => option.title}
+              handleHomeEndKeys
+              noOptionsText={messages.noResult}
+              inputValue={dialogValue}
+              onInputChange={(event, newValue) => handleChange(event, newValue)}
+              options={options as AutocompleteType[]}
+              sx={{ marginRight: "8px", width: "100%" }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={messages.label}
+                  variant="standard"
+                />
+              )}
+            />
           </S.ContainerAutoComplete>
           <S.Btn
             disabled={dialogValue === "" || dialogValue.length <= 3}
