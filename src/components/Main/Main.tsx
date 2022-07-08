@@ -25,13 +25,11 @@ export default function Main() {
     statusContent,
   } = useContentContext();
 
-  const optionsWithNoFilter = useMemo(
-    () =>
+  const optionsWithNoFilter = useMemo(() =>
       statusResult === "loaded" &&
       results?.map(({ name }) => ({
         title: capitalize(name),
-      })) || [], [results]
-  );
+    })) || [], [results]);
 
   const options = useMemo(() => {
       let items = optionsWithNoFilter;
@@ -48,7 +46,7 @@ export default function Main() {
     event?.preventDefault();
     setDialogValue(event ? newValue : "");
   };
-  
+
   const handleSubmit = (event: any) => {
     event?.preventDefault();
     if (
@@ -66,7 +64,7 @@ export default function Main() {
     
     if (
       state.productDay === dialogValue.toLowerCase() &&
-      state.activeStep <= 4
+      state.activeStep < 4
     ) {
       setState((prevState) => ({
         ...prevState,
@@ -76,7 +74,7 @@ export default function Main() {
 
     if (
       state.productDay !== dialogValue.toLowerCase() &&
-      state.activeStep > 4
+      state.activeStep >= 4
     ) {
       setState((prevState) => ({
         ...prevState,
