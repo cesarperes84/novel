@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import messages from "./messagesMain";
 import Header from "../Header";
 import CoverImage from "./CoverImage";
+import Steps from "../Steps";
 
 type AutocompleteType = {
   inputValue?: string;
@@ -117,7 +118,7 @@ export default function Main() {
       }));
     }
   }, [statusContent]);
-
+  
   if (state.statusGame === "matched") {
     return (
       <EndGame
@@ -181,6 +182,7 @@ export default function Main() {
             {messages.buttonLabel}
           </S.Btn>
         </form>
+        <Steps activeStep={state.activeStep} />
         <Chances errors={state.errors} onClick={() => handleSubmit(null)} />
       </>
     );
