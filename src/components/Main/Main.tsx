@@ -10,27 +10,8 @@ import messages from "./messagesMain";
 import Header from "../Header";
 import CoverImage from "./CoverImage";
 import Steps from "../Steps";
-
-type AutocompleteType = {
-  inputValue?: string;
-  title: string;
-};
-
-type StateMainType = {
-  activeStep: number;
-  errors: string[];
-  optionsExcluded: string[];
-  productDay: string;
-  statusGame: string;
-};
-
-const initState = {
-  activeStep: 0,
-  optionsExcluded: [],
-  errors: [],
-  productDay: "",
-  statusGame: "started",
-};
+import initState from "./initState";
+import { StateMainType, AutocompleteType } from "./types";
 
 export default function Main() {
   const [state, setState] = useState<StateMainType>(initState);
@@ -61,7 +42,7 @@ export default function Main() {
         items = itemsX;
       }
       return items;
-    },[state.optionsExcluded, results]);
+    }, [state.optionsExcluded, results]);
 
   const handleChange = (event: any, newValue: any) => {
     event?.preventDefault();
@@ -118,40 +99,25 @@ export default function Main() {
       }));
     }
   }, [statusContent]);
-  
-  if (state.statusGame === "matched") {
-    return (
-      <EndGame
-        activeStep={state.activeStep}
-        finalImage={content.photos[5]}
-        autohrContent={capitalize(content.author)}
-        resultContent={capitalize(content.name)}
-        statusGame="matched"
-        year={content.year}
-      />
-    );
-  }
 
-  if (state.activeStep === 5 || state.statusGame === "game-over") {
+  if (state.statusGame !== "started" || state.activeStep === 5) {
     return (
       <EndGame
         activeStep={state.activeStep}
-        statusGame="game-over"
+        statusGame={state.statusGame}
         autohrContent={capitalize(content.author)}
         resultContent={capitalize(content.name)}
         finalImage={content.photos[5]}
         year={content.year}
       />
     );
-  }
+  } 
 
   if (state.statusGame === "started" && statusContent === "loaded") {
     return (
       <>
         <Header />
-
         <CoverImage imageUrl={content.photos[state.activeStep]} />
-
         <S.Text>{messages.question}</S.Text>
         <form style={{ width: "100%" }} onSubmit={handleSubmit}>
           <S.ContainerAutoComplete>
