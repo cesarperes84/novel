@@ -18,12 +18,14 @@ type AutocompleteType = {
 type StateMainType = {
   activeStep: number;
   errors: string[];
+  optionsExcluded: string[];
   productDay: string;
   statusGame: string;
 };
 
 const initState = {
   activeStep: 0,
+  optionsExcluded: [],
   errors: [],
   productDay: "",
   statusGame: "started",
@@ -41,14 +43,24 @@ export default function Main() {
     statusContent,
   } = useContentContext();
 
-  const options = useMemo(
+  const optionsWithNoFilter = useMemo(
     () =>
       statusResult === "loaded" &&
       results?.map(({ name }) => ({
         title: capitalize(name),
-      })),
-    [results]
+      })) || [], [results]
   );
+
+  const options = useMemo(() => {
+      let items = optionsWithNoFilter;
+      let itemsX: any[] = [];
+      if (state.optionsExcluded?.length > 0) {
+        items = optionsWithNoFilter;
+        itemsX = items.filter(({ title }) => !state.optionsExcluded.includes((title)));
+        items = itemsX;
+      }
+      return items;
+    },[state.optionsExcluded, results]);
 
   const handleChange = (event: any, newValue: any) => {
     event?.preventDefault();
@@ -65,6 +77,7 @@ export default function Main() {
       setState((prevState) => ({
         ...prevState,
         activeStep: state.activeStep + 1,
+        optionsExcluded: [...state.optionsExcluded, dialogValue],
         errors: [...state.errors, `${state.activeStep + 1}. x ${dialogValue}`],
       }));
     }
