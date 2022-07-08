@@ -48,7 +48,7 @@ export default function Main() {
     event?.preventDefault();
     setDialogValue(event ? newValue : "");
   };
-
+  
   const handleSubmit = (event: any) => {
     event?.preventDefault();
     if (
@@ -60,10 +60,10 @@ export default function Main() {
         ...prevState,
         activeStep: state.activeStep + 1,
         optionsExcluded: [...state.optionsExcluded, dialogValue],
-        errors: [...state.errors, `${state.activeStep + 1}. x ${dialogValue}`],
+        errors: [...state.errors, `${state.activeStep + 1}. x ${capitalize(dialogValue)}`],
       }));
     }
-
+    
     if (
       state.productDay === dialogValue.toLowerCase() &&
       state.activeStep <= 4
@@ -122,11 +122,13 @@ export default function Main() {
         <form style={{ width: "100%" }} onSubmit={handleSubmit}>
           <S.ContainerAutoComplete>
             <Autocomplete
+              autoHighlight
               disablePortal
               getOptionLabel={(option: AutocompleteType) => option.title}
               handleHomeEndKeys
               noOptionsText={messages.noResult}
               inputValue={dialogValue}
+              openOnFocus={false}
               onInputChange={(event, newValue) => handleChange(event, newValue)}
               options={options as AutocompleteType[]}
               sx={{ marginRight: "8px", width: "100%" }}
