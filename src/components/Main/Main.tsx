@@ -96,6 +96,7 @@ export default function Main() {
     if (
         localStorage.getItem('gameData') === today && 
         localStorage.getItem('statusGame') !== 'started' && 
+        localStorage.getItem('statusGame') !== null && 
         statusContent === "loaded"
       ) {
       setState((prevState) => ({

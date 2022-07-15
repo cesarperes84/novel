@@ -30,7 +30,6 @@ const EndGame = ({
 }: EndGameProps): JSX.Element => {
   const iconsShare = iconsShareUtil(activeStep, statusGame);
 
-  console.log('statusGame', statusGame);
   const shareContent = `Qual é a novela? 📺 ${iconsShare}`;
   const url = "https://novel-app-web.vercel.app";
 
