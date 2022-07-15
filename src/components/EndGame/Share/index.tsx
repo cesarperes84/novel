@@ -16,19 +16,12 @@ const BASE_URL_WHATSAPP = "whatsapp://send?text=";
 const BASE_URL_TWITTER = "https://twitter.com/intent/tweet?text=";
 
 export const Share = ({ shareContent, url }: ShareProps) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isCopied, setIsCopied] = React.useState(false);
 
-  const handleCopyText = (event: any) => {
+  const handleCopyText = () => {
     navigator.clipboard.writeText(`${shareContent} ${url}`);
-    setAnchorEl(event.currentTarget);
+    setIsCopied(true);
   };
-  
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   return (
     <S.Container>
@@ -63,19 +56,9 @@ export const Share = ({ shareContent, url }: ShareProps) => {
 
       <S.Paragraph>
         Para compartilhar em outras redes,
-        <S.ShareLink aria-describedby={id} onClick={handleCopyText}>copie aqui.</S.ShareLink>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-        >
-          <Typography sx={{ p: 2 }}>Texto de compartilhamento copiado.</Typography>
-        </Popover>
+        <S.ShareLink onClick={handleCopyText}>
+          {isCopied ? 'copiado' : 'copie aqui'}.
+        </S.ShareLink>
       </S.Paragraph>
     </S.Container>
   );
