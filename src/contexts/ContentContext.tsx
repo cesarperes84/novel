@@ -12,7 +12,7 @@ import { ActionType, reducer, StateType, Types } from '../reducers/reducersConte
 interface ContentContextData extends StateType {
   dispatchContent: Dispatch<ActionType>,
   handleSearch: any,
-  loadDayContent: any,
+  loadContent: any,
 };
 
 interface Props {
@@ -23,13 +23,13 @@ const ContentContext = createContext<ContentContextData>({
     ...initialState,
     dispatchContent: ({ type, payload }) => {},
     handleSearch: () => {},
-    loadDayContent: () => {},
+    loadContent: () => {},
   } as ContentContextData);
 
 const ContentProvider = ({children}: Props): JSX.Element => {
   const [state, dispatchContent] = useReducer(reducer, initialState);
 
-  const loadDayContent = useCallback(({ param }: { param: string }) => {
+  const loadContent = useCallback(({ param }: { param: string }) => {
     dispatchContent({ type: Types.SetStatusDayContent, payload: 'loading' });
     const getService = param === 'random' ? getRandomContent : getDayContent;
     return getService()
@@ -56,8 +56,8 @@ const ContentProvider = ({children}: Props): JSX.Element => {
     ...state,
     dispatchContent,
     handleSearch,
-    loadDayContent,
-  }), [handleSearch, loadDayContent, state]);
+    loadContent,
+  }), [handleSearch, loadContent, state]);
 
   return (
     <ContentContext.Provider

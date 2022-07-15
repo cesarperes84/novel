@@ -19,7 +19,7 @@ export default function Main({ param } : { param: string} ) {
   const [dialogValue, setDialogValue] = useState("");
   const {
     content,
-    loadDayContent,
+    loadContent,
     results,
     handleSearch,
     statusResult,
@@ -108,9 +108,9 @@ export default function Main({ param } : { param: string} ) {
   }, [setState, statusContent]);
 
   useEffect(() => {
-    loadDayContent({ param });
+    loadContent({ param });
     handleSearch({ term: "" });
-  }, [handleSearch, loadDayContent]);
+  }, [handleSearch, loadContent]);
 
   useEffect(() => {
     if (statusContent === "loaded") {
