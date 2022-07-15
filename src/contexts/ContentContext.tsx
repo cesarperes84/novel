@@ -32,7 +32,7 @@ const ContentProvider = ({children}: Props): JSX.Element => {
   const loadContent = useCallback(({ param }: { param: string }) => {
     dispatchContent({ type: Types.SetStatusDayContent, payload: 'loading' });
     const getService = param === 'random' ? getRandomContent : getDayContent;
-    return getService()
+    getService()
       .then((response) => {
         dispatchContent({ type: Types.SetDayContent, payload: response.data  });
       })

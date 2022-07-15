@@ -14,8 +14,9 @@ import initState from "./initState";
 import { StateMainType, AutocompleteType } from "./types";
 import formatDate from "../../utility/formatDate";
 
-export default function Main({ param } : { param: string} ) {
+const Main = ({ param } : { param: string} ) => {
   const [state, setState] = useState<StateMainType>(initState);
+  const [open, setOpen] = useState(false);
   const [dialogValue, setDialogValue] = useState("");
   const {
     content,
@@ -26,7 +27,7 @@ export default function Main({ param } : { param: string} ) {
     statusContent,
   } = useContentContext();
   const today = formatDate({ date: Date.now(), formatString: 'yyyy-MM-dd' });
-
+  let component = null;
   const optionsWithNoFilter = useMemo(() =>
       statusResult === "loaded" &&
       results?.map(({ name }) => ({
@@ -42,7 +43,7 @@ export default function Main({ param } : { param: string} ) {
         items = itemsX;
       }
       return items;
-    }, [state.optionsExcluded, results]);
+    }, [state.optionsExcluded, optionsWithNoFilter]);
 
   const handleChange = (event: any, newValue: any) => {
     event?.preventDefault();
@@ -51,9 +52,12 @@ export default function Main({ param } : { param: string} ) {
 
   const handleSubmit = (event: any) => {
     event?.preventDefault();
+    const productDayFormatted = state.productDay.toLocaleLowerCase();
+    const dialogValueFormatted = dialogValue.toLocaleLowerCase();
+
     if (
       state.productDay !== "" &&
-      state.productDay !== dialogValue.toLocaleLowerCase() &&
+      productDayFormatted !== dialogValueFormatted &&
       state.activeStep <= 4
     ) {
       setState((prevState) => ({
@@ -65,7 +69,7 @@ export default function Main({ param } : { param: string} ) {
     }
 
     if (
-      state.productDay === dialogValue.toLocaleLowerCase() &&
+      productDayFormatted === dialogValueFormatted &&
       state.activeStep < 4
     ) {
       localStorage.setItem('statusGame', "matched");
@@ -78,7 +82,7 @@ export default function Main({ param } : { param: string} ) {
     }
     
     if (
-      state.productDay !== dialogValue.toLocaleLowerCase() &&
+      productDayFormatted !== dialogValueFormatted &&
       state.activeStep >= 4
     ) {
       setState((prevState) => ({
@@ -93,25 +97,12 @@ export default function Main({ param } : { param: string} ) {
   };
 
   useEffect(() => {
-    if (
-        localStorage.getItem('gameData') === today && 
-        localStorage.getItem('statusGame') !== 'started' && 
-        localStorage.getItem('statusGame') !== null && 
-        statusContent === "loaded"
-      ) {
-      setState((prevState) => ({
-        ...prevState,
-        activeStep: JSON.parse(localStorage.getItem('activeStep')!),
-        statusGame: localStorage.getItem('statusGame') + '',
-      }));
+   if (statusContent === "unloaded") {
+      loadContent({ param });
+      handleSearch({ term: "" });
     }
-  }, [setState, statusContent]);
-
-  useEffect(() => {
-    loadContent({ param });
-    handleSearch({ term: "" });
-  }, [handleSearch, loadContent]);
-
+  }, []);
+  
   useEffect(() => {
     if (statusContent === "loaded") {
       setState((prevState) => ({
@@ -121,10 +112,32 @@ export default function Main({ param } : { param: string} ) {
       }));
       localStorage.setItem('gameData',  content.date);
     }
-  }, [statusContent]);
+  }, [content.name, statusContent]);
 
-  if (state.statusGame !== "started" || state.activeStep === 5) {
-    return (
+  useEffect(() => {
+    if (param === 'random') {
+      localStorage.removeItem('gameData');
+      localStorage.removeItem('activeStep');
+      localStorage.removeItem('statusGame');
+    } else if (param === 'start') {
+      if (
+        localStorage.getItem('gameData') === today && 
+        localStorage.getItem('statusGame') !== 'started' && 
+        localStorage.getItem('statusGame') !== null && 
+        statusContent === "loaded"
+      ) {
+        setState((prevState) => ({
+          ...prevState,
+          activeStep: JSON.parse(localStorage.getItem('activeStep')!),
+          statusGame: localStorage.getItem('statusGame') + '',
+        }));
+      } 
+    }
+  }, [param, statusContent]);
+  
+
+  if (state.statusGame !== "started" || state.activeStep === 5 && statusContent === "loaded") {
+    component = (
       <EndGame
         activeStep={state.activeStep}
         statusGame={state.statusGame}
@@ -137,7 +150,7 @@ export default function Main({ param } : { param: string} ) {
   } 
 
   if (state.statusGame === "started" && statusContent === "loaded") {
-    return (
+    component = (
       <>
         <Header />
         <CoverImage imageUrl={content.photos[state.activeStep]} />
@@ -154,6 +167,14 @@ export default function Main({ param } : { param: string} ) {
               openOnFocus={false}
               onInputChange={(event, newValue) => handleChange(event, newValue)}
               options={options as AutocompleteType[]}
+              open={open}
+              onOpen={() => {
+                // only open when in focus and inputValue is not empty
+                if (dialogValue) {
+                  setOpen(true);
+                }
+              }}
+              onClose={() => setOpen(false)}
               sx={{ marginRight: "8px", width: "100%" }}
               renderInput={(params) => (
                 <TextField
@@ -178,5 +199,7 @@ export default function Main({ param } : { param: string} ) {
       </>
     );
   }
-  return null;
-}
+  return component;
+};
+
+export default Main;
