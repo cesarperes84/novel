@@ -36,8 +36,11 @@ export const Paragraph = styled(Box)`
   margin: 0 auto;
 `;
 
-export const ShareLink = styled(Box)`
+export const ShareLink = styled(Box)<{isCopied: string}>`
   cursor: pointer;
   text-decoration: underline;
   padding-left: 5px;
+  a { 
+    text-decoration: ${({ isCopied }) => isCopied ? "none" : "underline"};
+  }
 `;
