@@ -14,7 +14,7 @@ import initState from "./initState";
 import { StateMainType, AutocompleteType } from "./types";
 import formatDate from "../../utility/formatDate";
 
-export default function Main() {
+export default function Main({ param } : { param: string} ) {
   const [state, setState] = useState<StateMainType>(initState);
   const [dialogValue, setDialogValue] = useState("");
   const {
@@ -108,7 +108,7 @@ export default function Main() {
   }, [setState, statusContent]);
 
   useEffect(() => {
-    loadDayContent();
+    loadDayContent({ param });
     handleSearch({ term: "" });
   }, [handleSearch, loadDayContent]);
 
