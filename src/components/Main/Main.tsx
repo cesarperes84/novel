@@ -12,6 +12,7 @@ import CoverImage from "./CoverImage";
 import Steps from "../Steps";
 import initState from "./initState";
 import { StateMainType, AutocompleteType } from "./types";
+import formatDate from "../../utility/formatDate";
 
 export default function Main() {
   const [state, setState] = useState<StateMainType>(initState);
@@ -24,6 +25,7 @@ export default function Main() {
     statusResult,
     statusContent,
   } = useContentContext();
+  const today = formatDate({ date: Date.now(), formatString: 'yyyy-MM-dd' });
 
   const optionsWithNoFilter = useMemo(() =>
       statusResult === "loaded" &&
@@ -51,38 +53,58 @@ export default function Main() {
     event?.preventDefault();
     if (
       state.productDay !== "" &&
-      state.productDay !== dialogValue &&
+      state.productDay !== dialogValue.toLocaleLowerCase() &&
       state.activeStep <= 4
     ) {
       setState((prevState) => ({
         ...prevState,
         activeStep: state.activeStep + 1,
         optionsExcluded: [...state.optionsExcluded, dialogValue],
-        errors: [...state.errors, `${state.activeStep + 1}. x ${capitalize(dialogValue)}`],
-      }));
-    }
-    
-    if (
-      state.productDay === dialogValue.toLowerCase() &&
-      state.activeStep < 4
-    ) {
-      setState((prevState) => ({
-        ...prevState,
-        statusGame: "matched",
+        errors: [...state.errors, `${state.activeStep + 1}. x ${capitalize(dialogValue || 'pulou')}`],
       }));
     }
 
     if (
-      state.productDay !== dialogValue.toLowerCase() &&
+      state.productDay === dialogValue.toLocaleLowerCase() &&
+      state.activeStep < 4
+    ) {
+      localStorage.setItem('statusGame', "matched");
+      localStorage.setItem('activeStep', (state.activeStep + 1).toString());
+      setState((prevState) => ({
+        ...prevState,
+        activeStep: state.activeStep + 1,
+        statusGame: "matched",
+      }));
+    }
+    
+    if (
+      state.productDay !== dialogValue.toLocaleLowerCase() &&
       state.activeStep >= 4
     ) {
       setState((prevState) => ({
         ...prevState,
+        activeStep: state.activeStep + 1,
         statusGame: "game-over",
       }));
+      localStorage.setItem('statusGame', "game-over");
+      localStorage.setItem('activeStep', (state.activeStep + 1).toString());
     }
     setDialogValue("");
   };
+
+  useEffect(() => {
+    if (
+        localStorage.getItem('gameData') === today && 
+        localStorage.getItem('statusGame') !== 'started' && 
+        statusContent === "loaded"
+      ) {
+      setState((prevState) => ({
+        ...prevState,
+        activeStep: JSON.parse(localStorage.getItem('activeStep')!),
+        statusGame: localStorage.getItem('statusGame') + '',
+      }));
+    }
+  }, [setState, statusContent]);
 
   useEffect(() => {
     loadDayContent();
@@ -93,8 +115,10 @@ export default function Main() {
     if (statusContent === "loaded") {
       setState((prevState) => ({
         ...prevState,
+        date: content.date,
         productDay: content.name,
       }));
+      localStorage.setItem('gameData',  content.date);
     }
   }, [statusContent]);
 
@@ -105,7 +129,7 @@ export default function Main() {
         statusGame={state.statusGame}
         autohrContent={capitalize(content.author)}
         resultContent={capitalize(content.name)}
-        finalImage={content.photos[5]}
+        finalImage={content?.photos[5]}
         year={content.year}
       />
     );
@@ -141,7 +165,7 @@ export default function Main() {
           </S.ContainerAutoComplete>
           <S.Btn
             disabled={dialogValue === "" || dialogValue.length <= 3}
-            variant="outlined"
+            variant="contained"
             size="large"
             onClick={handleSubmit}
           >

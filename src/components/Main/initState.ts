@@ -3,6 +3,7 @@ const initState = {
     optionsExcluded: [],
     errors: [],
     productDay: "",
+    date: "",
     statusGame: "started",
   };
 

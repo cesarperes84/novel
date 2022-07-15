@@ -15,6 +15,7 @@ export type ResultType = {
 export type StateType = {
   content: {
     author: string,
+    date: string,
     name: string,
     photos: string[],
     year: string,
@@ -28,12 +29,6 @@ export type ActionType = {
   type: Types,
   payload?: any,
 }
-
-/* 
-export type ContentState = typeof initialState;
-
-export function reducer(state: StateType, action: ActionType): ContentState {
- */
 
 export function reducer(state: StateType, action: ActionType) {
     switch (action.type) {

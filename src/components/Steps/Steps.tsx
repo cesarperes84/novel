@@ -7,22 +7,19 @@ interface StepsProps {
 
 const steps = ['1º', '2º', '3º', '4º', '5º'];
 
-const Steps = ({ activeStep }: StepsProps): JSX.Element => {
-  console.log(activeStep);
-  return (
-    <S.Container>
-        {steps.map((label, index) => (
-            <S.Step
-              key={label}
-              active={activeStep === index}
-              completed={index < activeStep} 
-            >
-              {label}
-            </S.Step>
-        ))}
-    </S.Container>
-  );
-};
+const Steps = ({ activeStep }: StepsProps): JSX.Element => (
+  <S.Container>
+      {steps.map((label, index) => (
+          <S.Step
+            key={label}
+            active={activeStep === index}
+            completed={index < activeStep} 
+          >
+            {label}
+          </S.Step>
+      ))}
+  </S.Container>
+);
 
 
 export default Steps;
