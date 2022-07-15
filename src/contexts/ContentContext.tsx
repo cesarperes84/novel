@@ -3,6 +3,7 @@ import { createContext, useContext, useMemo, useReducer, Dispatch, useCallback, 
 import {
   getContent,
   getDayContent,
+  getRandomContent,
 } from '../services/contentServices';
 
 import initialState from '../constants/initialStateApp';
@@ -28,9 +29,10 @@ const ContentContext = createContext<ContentContextData>({
 const ContentProvider = ({children}: Props): JSX.Element => {
   const [state, dispatchContent] = useReducer(reducer, initialState);
 
-  const loadDayContent = useCallback(() => {
+  const loadDayContent = useCallback(({ param }: { param: string }) => {
     dispatchContent({ type: Types.SetStatusDayContent, payload: 'loading' });
-    return getDayContent()
+    const getService = param === 'random' ? getRandomContent : getDayContent;
+    return getService()
       .then((response) => {
         dispatchContent({ type: Types.SetDayContent, payload: response.data  });
       })

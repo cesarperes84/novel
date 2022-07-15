@@ -6,3 +6,5 @@ export const getContent = ({ term }) =>
 export const getDayContent = () => 
   axios.get(`${process.env.NEXT_PUBLIC_API_URL}/start`);
   
+export const getRandomContent = () => 
+  axios.get(`${process.env.NEXT_PUBLIC_API_URL}/random`);
