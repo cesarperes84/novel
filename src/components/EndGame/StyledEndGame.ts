@@ -36,4 +36,7 @@ export const AdsText = styled(Box)`
   text-align: center;
   white-space: nowrap;
   width: 100%;
+  a { 
+    text-decoration: underline;
+  }
 `;
