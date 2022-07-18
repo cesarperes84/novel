@@ -34,6 +34,9 @@ export const Paragraph = styled(Box)`
   width: 100%;
   text-align: center;
   margin: 0 auto;
+  @media (max-width: 414px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const ShareLink = styled(Box)<{isCopied: boolean}>`

@@ -55,10 +55,17 @@ export const Share = ({ shareContent, url }: ShareProps) => {
       </S.ContainerIcons>
 
       <S.Paragraph>
-        Para compartilhar em outras redes,
-        <S.ShareLink onClick={handleCopyText} isCopied={isCopied}>
-          {isCopied ? 'copiado' : 'copie o link aqui'}.
-        </S.ShareLink>
+      {isCopied ? (
+        'Link copiado, agora é só colar na rede de sua preferência.'
+      ) : (
+        <>
+          Para compartilhar em outras redes,
+          <S.ShareLink onClick={handleCopyText} isCopied={isCopied}>
+            copie o link aqui
+          </S.ShareLink>
+          .
+        </>
+      )}
       </S.Paragraph>
     </S.Container>
   );
