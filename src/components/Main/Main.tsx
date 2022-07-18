@@ -70,7 +70,7 @@ const Main = ({ param } : { param: string} ) => {
 
     if (
       productDayFormatted === dialogValueFormatted &&
-      state.activeStep < 4
+      state.activeStep <= 4
     ) {
       localStorage.setItem('statusGame', "matched");
       localStorage.setItem('activeStep', (state.activeStep + 1).toString());
@@ -135,7 +135,6 @@ const Main = ({ param } : { param: string} ) => {
     }
   }, [param, statusContent]);
   
-
   if (state.statusGame !== "started" || state.activeStep === 5 && statusContent === "loaded") {
     component = (
       <EndGame
