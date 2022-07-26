@@ -1,5 +1,5 @@
 export interface PlayButtonProps {
-    disabled: boolean;
-    handleSubmit: any;
-    label: string;
-  }
+  disabled: boolean;
+  handleSubmit: any;
+  label: string;
+}

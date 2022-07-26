@@ -1,6 +1,6 @@
 import * as S from "./StyledAutocomplete";
-
 import TextField from "@mui/material/TextField";
+import { AutocompleteProps } from "./types";
 
 const Autocomplete = ({
   getOptionLabel,
@@ -12,17 +12,7 @@ const Autocomplete = ({
   open,
   onOpen,
   onClose,
-} : {
-  getOptionLabel: any;
-  noOptionsText: string;
-  inputValue: string;
-  onInputChange: any;
-  label: string;
-  options: any;
-  open: boolean;
-  onOpen: any;
-  onClose: any;
-}) => {
+} : AutocompleteProps): JSX.Element => {
   return (
       <S.Autocomplete
         getOptionLabel={getOptionLabel}
