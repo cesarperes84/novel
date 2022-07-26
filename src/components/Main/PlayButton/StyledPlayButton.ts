@@ -1,8 +1,8 @@
-import Button from '@mui/material/Button';
+import ButtonMui from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 
-export const Btn = styled(Button)`
+export const Button = styled(ButtonMui)`
   background-color:#00888F;
   color:  #FFFFFF;
   font-weight: bold;
