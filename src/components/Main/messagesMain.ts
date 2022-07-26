@@ -1,7 +1,7 @@
 const messages = {
     label: "Digite o nome da novela",
     noResult: "Nenhum resultado encontrado.",
-    buttonLabel: "Tentar",
+    buttonLabel: "Jogar",
     question: "Qual é a novela?",
   };
 

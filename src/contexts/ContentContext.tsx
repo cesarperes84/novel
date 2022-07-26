@@ -6,15 +6,15 @@ import {
   getRandomContent,
 } from '../services/contentServices';
 
-import initialState from '../constants/initialStateApp';
+import capitalize from "../utility/capitalize";
+import initialState from './initialStateContext';
 import { ActionType, reducer, StateType, Types } from '../reducers/reducersContent';
-
 interface ContentContextData extends StateType {
   dispatchContent: Dispatch<ActionType>,
   handleSearch: any,
   loadContent: any,
+  optionsWithNoFilter: any,
 };
-
 interface Props {
   children: React.ReactNode;
 }
@@ -52,11 +52,18 @@ const ContentProvider = ({children}: Props): JSX.Element => {
       });
   }, []);
 
+  const optionsWithNoFilter = useMemo(() =>
+      state.statusResult === "loaded" &&
+      state.results?.map(({ name }: { name: string; }) => ({
+        title: capitalize(name),
+    })) || [], [state.results]);
+
   const providerValue = useMemo(() => ({
     ...state,
     dispatchContent,
     handleSearch,
     loadContent,
+    optionsWithNoFilter,
   }), [handleSearch, loadContent, state]);
 
   return (

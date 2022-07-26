@@ -1,5 +1,3 @@
-import initialState from '../constants/initialStateApp';
-
 export enum Types {
   SetDayContent = "setDayContent",
   SetStatusDayContent = "setStatusDayContent",
